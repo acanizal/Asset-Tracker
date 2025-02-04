@@ -2,7 +2,6 @@
   "name": "server",
   "version": "1.0.0",
   "main": "index.js",
-
   "scripts": {
     "_comment": "script using nodemon package to automatically restart the server when changes are made to the json files",
     "start": "nodemon server.js"
@@ -14,6 +13,7 @@
   "dependencies": {
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "morgan": "^1.10.0",
     "nodemon": "^3.1.9"
   }
 }
