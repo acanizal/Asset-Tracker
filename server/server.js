@@ -1,9 +1,11 @@
 
 //dotenv package for managing environment variables, port...
+
 require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 const app = express();
+const db = require("./db");
 
 //express middleware for retrieving data from the client - in JSON format to 
 //takes the information in the body of the request and sets it equal to teh req object
@@ -11,17 +13,27 @@ app.use(express.json());
 
 
 //get all assets
-app.get("/api/v1/assets", (req, res) => {
+app.get("/api/v1/assets", async (req, res) => {
     //http://localhost:4000/api/v1/assets this is the route that this get api will use
 
+    try {
+        const results = await db.query("SELECT * FROM tracker");
+        console.log(results);
 
-    //responses back to the client
-    res.status(200).json({
-        status: "success",
-        data: {
-        assets: "ALL ASSETS",
-        }
-    });
+        //responses back to the client
+        res.status(200).json({
+            status: "success",
+            results: results.rows.length,
+            data: {
+                assets: results.rows,
+            }
+        });
+    } catch (err) {
+        console.log(err);
+    }
+   
+
+   
 });
 
 //get one asset
